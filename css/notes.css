@@ -1,0 +1,134 @@
+/* ============================================================
+ * notes.css — 识谱练习页样式
+ * ============================================================ */
+
+.set-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 12px 0 8px;
+}
+.set-label:first-child { margin-top: 0; }
+.set-tip {
+  font-size: 12px;
+  color: var(--text-dim);
+  background: var(--accent-soft);
+  border: 1px solid rgba(232, 182, 76, .35);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin: 14px 0;
+  line-height: 1.6;
+}
+
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.btn-grid:has(> :nth-child(2)) { grid-template-columns: repeat(2, 1fr); }
+.choice-btn {
+  appearance: none;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: #202c42;
+  color: var(--text);
+  padding: 12px 6px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform .08s, border-color .15s, background .2s, box-shadow .2s;
+}
+.choice-btn small { display: block; font-size: 11px; font-weight: 400; color: var(--text-dim); margin-top: 2px; }
+.choice-btn:active { transform: scale(.96); }
+.choice-btn.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent) inset;
+}
+.choice-btn.active small { color: var(--accent); }
+
+/* ---------- 答题区 ---------- */
+.quiz-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+}
+.quiz-top span:last-child { font-variant-numeric: tabular-nums; }
+
+.progress-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: #202c42;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), #f0c96a);
+  border-radius: 3px;
+  transition: width .3s ease;
+}
+
+.staff-wrap {
+  background: #141b2b;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  padding: 6px;
+  overflow-x: auto;
+}
+#staff {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 420px;
+}
+
+.answer-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(54px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+.answer-btn {
+  appearance: none;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: #202c42;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 800;
+  font-family: inherit;
+  padding: 12px 4px;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform .08s, background .15s, border-color .15s;
+}
+.answer-btn:active { transform: scale(.94); }
+.answer-btn.right { background: var(--green-soft); border-color: var(--green); color: var(--green); }
+.answer-btn.wrong { background: var(--red-soft); border-color: var(--red); color: var(--red); }
+
+.feedback {
+  min-height: 24px;
+  margin-top: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+.feedback.ok { color: var(--green); }
+.feedback.bad { color: var(--red); }
+.feedback b { font-size: 18px; }
+
+/* 旋律当前音标记 */
+.cur-marker {
+  fill: var(--accent);
+}
+.cur-note .note-body { opacity: .55; }

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101522">
+<meta name="description" content="小提琴音准训练器：实时音高检测、音分偏差表、一把位指法图，支持电脑与手机。">
+<title>小提琴音准训练 · Violin Tuner</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎻</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="tuner">
+
+<header class="app-header">
+  <div class="brand">🎻 小提琴音准训练</div>
+  <div class="brand-sub">Violin Intonation Trainer</div>
+</header>
+
+<nav class="site-nav">
+  <a class="nav-link active" href="index.html">🎻 调音器</a>
+  <a class="nav-link" href="notes.html">🎼 识谱</a>
+  <a class="nav-link" href="rhythm.html">🥁 节奏</a>
+  <a class="nav-link" href="ear.html">🎧 音准</a>
+</nav>
+
+<main class="app">
+
+  <!-- 状态条 -->
+  <section class="card status-card" id="statusCard">
+    <span class="status-led" id="statusLed"></span>
+    <span class="status-text" id="statusText">点击下方「开始调音」，允许麦克风权限后即可使用</span>
+  </section>
+
+  <!-- 调音器主区域 -->
+  <section class="card tuner-card">
+    <div class="note-display">
+      <span class="note-letter" id="noteLetter">—</span>
+      <span class="note-octave" id="noteOctave"></span>
+    </div>
+    <div class="pos-info" id="posInfo">等待输入声音…</div>
+
+    <canvas id="meter" class="meter"></canvas>
+
+    <div class="cents-readout">
+      <span class="cents-value" id="centsValue">0</span>
+      <span class="cents-unit">¢</span>
+      <span class="cents-dir" id="centsDir"></span>
+    </div>
+
+    <div class="btn-row">
+      <button id="startBtn" class="btn btn-primary">🎤 开始调音</button>
+      <button id="stopBtn" class="btn btn-ghost hidden">⏹ 停止</button>
+    </div>
+  </section>
+
+  <!-- 指法可视化 -->
+  <section class="card">
+    <h2>指法可视化 <span class="hint">（金圈=目标指法 · 绿点=当前音的指法）</span></h2>
+    <div class="fb-wrap">
+      <svg id="fbSvg" viewBox="0 0 340 500" role="img" aria-label="小提琴指板指法图"></svg>
+    </div>
+    <div class="chart-legend">
+      <span><i class="dot dot-target"></i>目标指法（点击指板上的音可改）</span>
+      <span><i class="dot dot-detect"></i>当前音的指法</span>
+    </div>
+  </section>
+
+  <!-- 目标音 / 琴弦 -->
+  <section class="card">
+    <h2>目标音 <span class="hint">（点弦、指法图或指板选音）</span></h2>
+    <div class="string-row" id="stringRow">
+      <button class="string-btn" data-string="G">G弦<br><small>G3</small></button>
+      <button class="string-btn" data-string="D">D弦<br><small>D4</small></button>
+      <button class="string-btn" data-string="A">A弦<br><small>A4</small></button>
+      <button class="string-btn" data-string="E">E弦<br><small>E5</small></button>
+    </div>
+    <div class="target-row">
+      <div class="target-label">当前目标：<b id="targetNote">G3</b></div>
+      <button id="refBtn" class="btn btn-accent">🔊 播放参考音</button>
+    </div>
+    <div class="flash hidden" id="flash">🎯 准了！</div>
+  </section>
+
+  <!-- 一把位指法图 -->
+  <section class="card">
+    <h2>一把位指法图 <span class="hint">（点选格子设为目标音）</span></h2>
+    <div class="chart-wrap">
+      <div class="chart" id="chart" role="grid" aria-label="小提琴一把位指法图"></div>
+    </div>
+    <div class="chart-legend">
+      <span><i class="dot dot-target"></i>目标音</span>
+      <span><i class="dot dot-detect"></i>检测到的音</span>
+      <span><i class="dot dot-current"></i>当前弦</span>
+    </div>
+  </section>
+
+  <!-- 练习统计 -->
+  <section class="card">
+    <h2>练习统计 <span class="hint">（每次稳定检测到新音记一次）</span></h2>
+    <div class="stats">
+      <div class="stat"><div class="stat-num" id="statTotal">0</div><div class="stat-label">检测次数</div></div>
+      <div class="stat"><div class="stat-num" id="statInTune">0</div><div class="stat-label">音准次数</div></div>
+      <div class="stat"><div class="stat-num" id="statRate">—</div><div class="stat-label">命中率</div></div>
+      <div class="stat"><div class="stat-num" id="statStreak">0</div><div class="stat-label">连续音准</div></div>
+    </div>
+    <button id="resetStatsBtn" class="btn btn-ghost btn-sm">↺ 重置统计</button>
+  </section>
+
+  <!-- 使用说明 -->
+  <section class="card help">
+    <h2>使用说明</h2>
+    <ol>
+      <li>点击「🎤 开始调音」并允许麦克风权限（页面需在 <b>https</b> 或 <b>localhost</b> 下打开）。</li>
+      <li>拉奏或拨弦，页面实时显示音名、音分偏差（±50¢）与对应指法位置。</li>
+      <li><b>指法可视化</b>：指板上金色脉动圆环是目标指法位置，绿色光点是当前音的指法位置；两者重合且变绿即代表拉对了音。</li>
+      <li>指针进入中间绿色区（±5¢ 内）即视为音准；绿色代表偏低，红色代表偏高。</li>
+      <li>点选琴弦、指法图格子或指板上的音可设定目标音，偏差将相对目标音计算，并可直接播放参考音对照。</li>
+      <li>建议在安静环境下练习；环境噪音过大时请靠近麦克风。</li>
+    </ol>
+    <p class="note">手机端：需通过 HTTPS 访问才能使用麦克风（可用 GitHub Pages / Netlify 等免费托管，或手机 Chrome 调试时通过 localhost 端口转发访问）。</p>
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  小提琴音准训练 · 音准判定 ±5¢ · 基于 Web Audio API 音高检测
+</footer>
+
+<script src="js/pitch.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

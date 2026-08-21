@@ -1,0 +1,236 @@
+/* ============================================================
+ * rhythm.css — 节奏练习页样式
+ * ============================================================ */
+
+.set-label {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 12px 0 8px;
+}
+.set-label:first-child { margin-top: 0; }
+.set-tip {
+  font-size: 12px;
+  color: var(--text-dim);
+  background: var(--accent-soft);
+  border: 1px solid rgba(232, 182, 76, .35);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin: 14px 0 0;
+  line-height: 1.6;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+.measures-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.measures-grid .rh-level { padding: 8px 2px; font-size: 14px; }
+.measures-grid .rh-level small { margin-top: 1px; }
+.rh-level {
+  appearance: none;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  background: #202c42;
+  color: var(--text);
+  padding: 10px 2px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform .08s, border-color .15s, background .2s, box-shadow .2s;
+}
+.rh-level small { display: block; font-size: 10px; font-weight: 400; color: var(--text-dim); }
+.rh-level:active { transform: scale(.96); }
+.rh-level.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent) inset;
+}
+.rh-level.active small { color: var(--accent); }
+
+/* ---------- BPM ---------- */
+.bpm-row { margin-top: 14px; }
+.bpm-label { font-size: 14px; color: var(--text-dim); margin-bottom: 6px; }
+.bpm-label b { font-size: 22px; color: var(--accent); font-variant-numeric: tabular-nums; }
+.bpm-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.bpm-controls input[type="range"] {
+  flex: 1;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #2a3750;
+  border-radius: 3px;
+  outline: none;
+  min-width: 0;
+}
+.bpm-controls input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid #221a05;
+  cursor: pointer;
+}
+.bpm-controls input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid #221a05;
+  cursor: pointer;
+}
+.bpm-controls input[type="number"] {
+  flex: 0 0 auto;
+  width: 74px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--card-border);
+  background: #202c42;
+  color: var(--accent);
+  font-size: 17px;
+  font-weight: 700;
+  font-family: inherit;
+  text-align: center;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.bpm-controls input[type="number"]::-webkit-outer-spin-button,
+.bpm-controls input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.bpm-controls input[type="number"]:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.bpm-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.opt-row {
+  display: flex;
+  gap: 18px;
+  margin-top: 14px;
+}
+.chk {
+  font-size: 13px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+}
+.chk input { width: 17px; height: 17px; accent-color: var(--accent); }
+
+/* ---------- 练习区 ---------- */
+.quiz-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.staff-wrap {
+  background: #141b2b;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  padding: 6px;
+  overflow-x: auto;
+}
+#rhStaff {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 470px;
+}
+
+.rh-hint {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 10px 0 4px;
+  min-height: 20px;
+}
+.rh-hint.counting { color: var(--accent); font-weight: 600; }
+.rh-hint.playing { color: var(--text); }
+
+.tap-btn {
+  width: 100%;
+  padding: 20px;
+  font-size: 18px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2f9e63, #1f7a4a);
+  color: #fff;
+  margin-top: 8px;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.tap-btn:active { transform: scale(.97); }
+
+.rh-feedback {
+  min-height: 24px;
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+.rh-feedback.good { color: var(--green); }
+.rh-feedback.early, .rh-feedback.late { color: var(--accent); }
+.rh-feedback.bad { color: var(--red); }
+
+.rh-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-top: 12px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.rh-stats-row b {
+  display: block;
+  font-size: 20px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.rh-stats-row b.good { color: var(--green); }
+.rh-stats-row b.off { color: var(--accent); }
+.rh-stats-row b.bad { color: var(--red); }
+
+/* ---------- 谱面音符状态 ---------- */
+.rh-note { transition: opacity .15s; }
+.rh-note.pending { opacity: .35; }
+.rh-note.next { opacity: 1; }
+.rh-note.next .note-head { filter: drop-shadow(0 0 5px rgba(232, 182, 76, .9)); }
+.rh-note.hit-good .note-head { filter: drop-shadow(0 0 6px rgba(61, 220, 132, .9)); }
+.rh-note.hit-early .note-head, .rh-note.hit-late .note-head { filter: drop-shadow(0 0 6px rgba(232, 182, 76, .9)); }
+.rh-note.miss .note-head { filter: drop-shadow(0 0 6px rgba(255, 107, 107, .9)); opacity: .5; }
+
+.beat-cursor {
+  stroke: rgba(232, 182, 76, .5);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}

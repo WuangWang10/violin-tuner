@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101522">
+<meta name="description" content="音准（听音）训练：小提琴采样音色播放，听音辨名，单音到经典旋律五级难度，支持音名按钮与指板按弦双答题。">
+<title>音准训练 · Ear Trainer</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎧</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/ear.css">
+</head>
+<body data-page="ear">
+
+<header class="app-header">
+  <div class="brand">🎧 音准训练</div>
+  <div class="brand-sub">Ear Training</div>
+</header>
+
+<nav class="site-nav">
+  <a class="nav-link" href="index.html">🎻 调音器</a>
+  <a class="nav-link" href="notes.html">🎼 识谱</a>
+  <a class="nav-link" href="rhythm.html">🥁 节奏</a>
+  <a class="nav-link active" href="ear.html">🎧 音准</a>
+</nav>
+
+<main class="app">
+
+  <!-- 练习设置 -->
+  <section class="card" id="setupCard">
+    <h2>练习设置</h2>
+    <div class="set-label">关卡（听写难度逐级增加）</div>
+    <div class="level-grid" id="levelRow">
+      <button class="rh-level active" data-level="1">1<small>单音</small></button>
+      <button class="rh-level" data-level="2">2<small>三个音</small></button>
+      <button class="rh-level" data-level="3">3<small>五个音</small></button>
+      <button class="rh-level" data-level="4">4<small>七个音</small></button>
+      <button class="rh-level" data-level="5">5<small>旋律</small></button>
+    </div>
+
+    <div class="set-label">答题方式</div>
+    <div class="btn-grid" id="answerModeRow">
+      <button class="choice-btn active" data-mode="buttons">🎹 音名按钮</button>
+      <button class="choice-btn" data-mode="board">🎻 指板按弦</button>
+    </div>
+
+    <div class="set-tip">每轮开始会播放<b>基准音 A4</b> 校准；题目用小提琴音色播放，听音后<b>按顺序</b>选出每个音的音名。指板方式下，音域随关卡从一把位逐级扩展。</div>
+    <button id="startBtn" class="btn btn-primary">▶ 开始练习</button>
+    <div class="sound-status" id="soundStatus">正在准备音色…</div>
+  </section>
+
+  <!-- 答题区 -->
+  <section class="card hidden" id="quizCard">
+    <div class="quiz-top">
+      <span id="progressText">第 1 / 20 题</span>
+      <span id="scoreText">对 0 · 错 0</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="play-row">
+      <span class="seq-info" id="seqInfo">第 1 / 1 个音</span>
+      <div class="play-btns">
+        <button id="refBtn" class="btn btn-ghost btn-sm">🔊 基准音 A4</button>
+        <button id="replayBtn" class="btn btn-accent btn-sm">🔁 重播本题</button>
+      </div>
+    </div>
+
+    <!-- 音名按钮答题（钢琴式八度分行，点击=播放试听+作答） -->
+    <div class="set-label" id="btnLabel">点击音名作答（同时播放该音试听，可随时与基准音对比）</div>
+    <div class="answer-row" id="answerRow"></div>
+
+    <!-- 指板答题 -->
+    <div class="board-wrap hidden" id="boardWrap">
+      <svg id="earBoard" viewBox="0 0 340 520" role="img" aria-label="小提琴指板答题"></svg>
+    </div>
+
+    <div class="feedback" id="feedback">&nbsp;</div>
+
+    <div class="btn-row next-row">
+      <button id="nextBtn" class="btn btn-primary hidden">▶ 下一题</button>
+    </div>
+  </section>
+
+  <!-- 结果 -->
+  <section class="card hidden" id="resultCard">
+    <h2>本轮完成 🎉</h2>
+    <div class="stats">
+      <div class="stat"><div class="stat-num" id="resRate">—</div><div class="stat-label">正确率</div></div>
+      <div class="stat"><div class="stat-num" id="resRight">0</div><div class="stat-label">答对</div></div>
+      <div class="stat"><div class="stat-num" id="resWrong">0</div><div class="stat-label">答错</div></div>
+      <div class="stat"><div class="stat-num" id="resStreak">0</div><div class="stat-label">最长连对</div></div>
+    </div>
+    <div class="btn-row">
+      <button id="againBtn" class="btn btn-primary">🔀 再来一轮（重新洗牌）</button>
+      <button id="backBtn" class="btn btn-ghost">⚙ 返回设置</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="app-footer">
+  音准训练 · 小提琴采样音色 · 基准音校准 · 同站可切「调音器」「识谱」「节奏」
+</footer>
+
+<script src="js/pitch.js"></script>
+<script src="js/synth.js"></script>
+<script src="js/samples.js"></script>
+<script src="js/ear.js"></script>
+</body>
+</html>
